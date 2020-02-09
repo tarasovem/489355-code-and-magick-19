@@ -20,29 +20,19 @@ var randomArrayElement = function (arr) {
   return arr[Math.floor(randomIndex)];
 };
 
-var wizards = [
-  {
-    name: randomArrayElement(WIZARD_NAMES) + ' ' + randomArrayElement(WIZARD_SURNAME),
-    coatColor: randomArrayElement(WIZARD_COAT_COLOR),
-    eyeColor: randomArrayElement(WIZARD_EYES_COLOR)
-  },
-  {
-    name: randomArrayElement(WIZARD_NAMES) + ' ' + randomArrayElement(WIZARD_SURNAME),
-    coatColor: randomArrayElement(WIZARD_COAT_COLOR),
-    eyeColor: randomArrayElement(WIZARD_EYES_COLOR)
-  },
-  {
-    name: randomArrayElement(WIZARD_NAMES) + ' ' + randomArrayElement(WIZARD_SURNAME),
-    coatColor: randomArrayElement(WIZARD_COAT_COLOR),
-    eyeColor: randomArrayElement(WIZARD_EYES_COLOR)
-  },
-  {
-    name: randomArrayElement(WIZARD_NAMES) + ' ' + randomArrayElement(WIZARD_SURNAME),
-    coatColor: randomArrayElement(WIZARD_COAT_COLOR),
-    eyeColor: randomArrayElement(WIZARD_EYES_COLOR)
+var createWizardsList = function (amount) {
+  var list = [];
+  for (var i = 0; i < amount; i++) {
+    list[i] = {
+      name: randomArrayElement(WIZARD_NAMES) + ' ' + randomArrayElement(WIZARD_SURNAME),
+      coatColor: randomArrayElement(WIZARD_COAT_COLOR),
+      eyeColor: randomArrayElement(WIZARD_EYES_COLOR)
+    };
   }
-];
+  return list;
+};
 
+var wizards = createWizardsList(4);
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
