@@ -4,6 +4,7 @@ var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'К
 var WIZARD_SURNAME = ['де Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var WIZARD_COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARD_FIREBALL_COLOR = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 
 var userDialog = document.querySelector('.setup');
 
@@ -14,7 +15,7 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
   .querySelector('.setup-similar-item');
 
-var randomArrayElement = function (arr) {
+var getRandomArrayElement = function (arr) {
   var randomIndex = Math.random() * arr.length;
 
   return arr[Math.floor(randomIndex)];
@@ -24,9 +25,9 @@ var createWizardsList = function (amount) {
   var list = [];
   for (var i = 0; i < amount; i++) {
     list[i] = {
-      name: randomArrayElement(WIZARD_NAMES) + ' ' + randomArrayElement(WIZARD_SURNAME),
-      coatColor: randomArrayElement(WIZARD_COAT_COLOR),
-      eyeColor: randomArrayElement(WIZARD_EYES_COLOR)
+      name: getRandomArrayElement(WIZARD_NAMES) + ' ' + getRandomArrayElement(WIZARD_SURNAME),
+      coatColor: getRandomArrayElement(WIZARD_COAT_COLOR),
+      eyeColor: getRandomArrayElement(WIZARD_EYES_COLOR)
     };
   }
   return list;
@@ -110,4 +111,29 @@ userNameInput.addEventListener('invalid', function () {
   } else {
     userNameInput.setCustomValidity('');
   }
+});
+
+var playerSetup = document.querySelector('.setup-player');
+
+var setRandomProperty = function (evt) {
+  var target = evt.target;
+  var property;
+
+  if (target && target.classList.contains('wizard-coat')) {
+    property = getRandomArrayElement(WIZARD_COAT_COLOR);
+    target.style.fill = property;
+    playerSetup.querySelector('input[name="coat-color"]').value = property;
+  } else if (target && target.classList.contains('wizard-eyes')) {
+    property = getRandomArrayElement(WIZARD_EYES_COLOR);
+    target.style.fill = property;
+    playerSetup.querySelector('input[name="eyes-color"]').value = property;
+  } else if (target && target.classList.contains('setup-fireball')) {
+    property = getRandomArrayElement(WIZARD_FIREBALL_COLOR);
+    target.parentElement.style.backgroundColor = property;
+    playerSetup.querySelector('input[name="fireball-color"]').value = property;
+  }
+};
+
+playerSetup.addEventListener('click', function (evt) {
+  setRandomProperty(evt);
 });
