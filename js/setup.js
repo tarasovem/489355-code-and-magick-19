@@ -6,8 +6,8 @@ var WIZARD_COAT_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 10
 var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
 
+// Генерация разметки инвентаря
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
@@ -56,3 +56,48 @@ renderWizardsList(similarListElement);
 
 userDialog.querySelector('.setup-similar').classList.remove('hidden');
 
+// Обработка событий инвентаря
+var ENTER_KEY = 'Enter';
+var ESC_KEY = 'Escape';
+
+var userDialogOpenButton = document.querySelector('.setup-open');
+var userDialogCloseButton = document.querySelector('.setup-close');
+var userNameInput = document.querySelector('.setup-user-name');
+
+var onUserDialogEscPress = function (evt) {
+  if (evt.key === ESC_KEY) {
+    closeUserDialog();
+  }
+};
+
+var openUserDialog = function () {
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onUserDialogEscPress);
+};
+
+var closeUserDialog = function () {
+  userDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onUserDialogEscPress);
+};
+
+userDialogOpenButton.addEventListener('click', openUserDialog);
+
+userDialogOpenButton.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    openUserDialog();
+  }
+});
+
+userDialogCloseButton.addEventListener('click', closeUserDialog);
+
+userDialogCloseButton.addEventListener('keydown', function (evt) {
+  if (evt.key === ENTER_KEY) {
+    closeUserDialog();
+  }
+});
+
+userNameInput.addEventListener('keydown', function (evt) {
+  if (evt.key === ESC_KEY) {
+    evt.stopPropagation();
+  }
+});
